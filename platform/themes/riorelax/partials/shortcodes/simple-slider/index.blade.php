@@ -33,12 +33,12 @@
                                         </a>
                                     @endif
 
-                                    @if ($buttonPlayLabel && $linkYoutubeUrl)
+                                    {{--@if ($buttonPlayLabel && $linkYoutubeUrl)
                                         <a href="https://www.youtube.com/watch?v={{ $linkYoutubeUrl }}" class="video-i popup-video" data-animation="fadeInUp" data-delay=".8s" style="animation-delay: 0.8s;" tabindex="0">
                                             <i class="fas fa-play"></i>
                                             {!! BaseHelper::clean($buttonPlayLabel) !!}
                                         </a>
-                                    @endif
+                                    @endif--}}
                                 </div>
 
                             </div>
