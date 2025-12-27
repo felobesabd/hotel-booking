@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Register the custom service provider to hide plugin menu
+        $this->app->register(\App\Providers\HidePluginMenuServiceProvider::class);
     }
 }
