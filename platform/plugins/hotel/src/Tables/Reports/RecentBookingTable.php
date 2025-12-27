@@ -10,6 +10,7 @@ use Botble\Table\Columns\CreatedAtColumn;
 use Botble\Table\Columns\FormattedColumn;
 use Botble\Table\Columns\IdColumn;
 use Botble\Table\Columns\StatusColumn;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 class RecentBookingTable extends TableAbstract
@@ -115,9 +116,13 @@ class RecentBookingTable extends TableAbstract
                 }
 
                 if ($this->request->has('date_from') && $this->request->has('date_to')) {
+                    $dateFrom = $this->convertArabicNumbers($this->request->input('date_from'));
+                    $dateTo   = $this->convertArabicNumbers($this->request->input('date_to'));
+
+                    // dd($this->request->get('date_from'), $this->request->get('date_to'), $dateFrom, $dateTo);
                     $query->whereBetween('created_at', [
-                        $this->request->input('date_from'),
-                        $this->request->input('date_to'),
+                        Carbon::parse($dateFrom)->startOfDay(),
+                        Carbon::parse($dateTo)->endOfDay(),
                     ]);
                 }
 
@@ -127,5 +132,13 @@ class RecentBookingTable extends TableAbstract
         $this->type = self::TABLE_TYPE_SIMPLE;
         $this->defaultSortColumn = 0;
         $this->view = $this->simpleTableView();
+    }
+
+    function convertArabicNumbers(string $value): string
+    {
+        $arabic = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+        $english = ['0','1','2','3','4','5','6','7','8','9'];
+
+        return str_replace($arabic, $english, $value);
     }
 }
