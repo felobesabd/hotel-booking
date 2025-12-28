@@ -215,9 +215,17 @@ class HotelSupport
         return ($this->getDateFormatDatepicker() ?: config('plugins.hotel.hotel.booking_form_date_format')) ?: 'dd-mm-yyyy';
     }
 
-    public function dateFromRequest(string $date): Carbon|false
+    /*public function dateFromRequest(string $date): Carbon|false
     {
         return Carbon::createFromFormat($this->getDateFormat(), $date);
+    }*/
+
+    public function dateFromRequest(string $date): Carbon|false
+    {
+        return Carbon::createFromFormat(
+            $this->getDateFormat(),
+            normalizeDate($date)
+        );
     }
 
     public function getDateRangeInReport(Request $request): array
@@ -227,15 +235,23 @@ class HotelSupport
 
         if ($request->input('date_from')) {
             try {
-                $startDate = Carbon::now()->createFromFormat('Y-m-d', $request->input('date_from'));
-            } catch (Exception) {
+                $startDate = Carbon::createFromFormat(
+                    'Y-m-d',
+                    normalizeDate($request->input('date_from'))
+                );
+                // \Log::info('date_from: ' . $startDate); // local.INFO: date_from: 2025-12-15 15:36:19
+            } catch (Exception $e) {
+                // \Log::error('Error parsing date_from: ' . $e->getMessage());
                 $startDate = Carbon::now()->subDays(29);
             }
         }
 
         if ($request->input('date_to')) {
             try {
-                $endDate = Carbon::now()->createFromFormat('Y-m-d', $request->input('date_to'));
+                $endDate = Carbon::createFromFormat(
+                    'Y-m-d',
+                    normalizeDate($request->input('date_to'))
+                );
             } catch (Exception) {
                 $endDate = Carbon::now();
             }
@@ -251,6 +267,7 @@ class HotelSupport
 
         $predefinedRange = $request->input('predefined_range', trans('plugins/hotel::booking-report.ranges.last_30_days'));
 
+        // \Log::info(['date_from: ' => $startDate, 'end_date: ' => $endDate]);
         return [$startDate, $endDate, $predefinedRange];
     }
 

@@ -655,8 +655,9 @@ $(function () {
   if (!window.moment || !jQuery().daterangepicker) {
     return;
   }
-  moment.locale($('html').attr('lang'));
+  moment.locale('en');
   var $dateRange = $(document).find('.date-range-picker');
+  // console.log($dateRange);
   var dateFormat = $dateRange.data('format') || 'YYYY-MM-DD';
   var startDate = $dateRange.data('start-date') || moment().subtract(29, 'days');
   var today = moment();

@@ -4,14 +4,10 @@ namespace Database\Seeders;
 
 use Botble\Base\Supports\BaseSeeder;
 use Botble\Hotel\Models\Amenity;
-use Botble\Hotel\Models\Booking;
-use Botble\Hotel\Models\BookingAddress;
-use Botble\Hotel\Models\BookingRoom;
 use Botble\Hotel\Models\Room;
 use Botble\Hotel\Models\RoomCategory;
 use Botble\Slug\Facades\SlugHelper;
 use Botble\Slug\Models\Slug;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -171,10 +167,11 @@ class RoomSeeder extends BaseSeeder
             ],
         ];
 
-        Booking::query()->truncate();
-        BookingAddress::query()->truncate();
-        BookingRoom::query()->truncate();
-        DB::table('ht_booking_services')->truncate();
+        // REMOVED: Don't truncate booking data here - it should only be done in BookingSeeder
+        // Booking::query()->truncate();
+        // BookingAddress::query()->truncate();
+        // BookingRoom::query()->truncate();
+        // DB::table('ht_booking_services')->truncate();
 
         $amenities = Amenity::query()->pluck('id')->all();
         $faker = $this->fake();

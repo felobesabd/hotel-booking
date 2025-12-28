@@ -13,9 +13,10 @@ $(() => {
         return
     }
 
-    moment.locale($('html').attr('lang'))
+    moment.locale('en');
 
-    let $dateRange = $(document).find('.date-range-picker')
+    let $dateRange = $(document).find('.date-range-picker');
+    // console.log($dateRange);
     let dateFormat = $dateRange.data('format') || 'YYYY-MM-DD'
     let startDate = $dateRange.data('start-date') || moment().subtract(29, 'days')
 

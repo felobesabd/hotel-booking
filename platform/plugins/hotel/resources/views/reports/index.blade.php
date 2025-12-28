@@ -1,5 +1,10 @@
 @extends(BaseHelper::getAdminMasterLayoutTemplate())
 
+{{--@php
+    $startDateEnglish = normalizeDate($startDate->format('Y-m-d'));
+    $endDateEnglish   = normalizeDate($endDate->format('Y-m-d'));
+@endphp--}}
+
 @push('header-action')
     <x-core::button
         type="button"
