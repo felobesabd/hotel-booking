@@ -17,6 +17,7 @@ $(() => {
 
     let $dateRange = $(document).find('.date-range-picker');
     // console.log($dateRange);
+    alert('kkk');
     let dateFormat = $dateRange.data('format') || 'YYYY-MM-DD'
     let startDate = $dateRange.data('start-date') || moment().subtract(29, 'days')
 
